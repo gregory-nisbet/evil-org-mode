@@ -33,6 +33,9 @@
 (require 'evil)
 (require 'org)
 
+(defvar evil-org-evil-leader-enabled t
+  "create evil-leader keybindings or not")
+
 (define-minor-mode evil-org-mode
   "Buffer local minor mode for evil-org"
   :init-value nil
@@ -143,14 +146,15 @@ FUN function callback"
   "-" 'org-cycle-list-bullet
   (kbd "TAB") 'org-cycle)
 
-;; leader maps
-(evil-leader/set-key-for-mode 'org-mode
-  "t"  'org-show-todo-tree
-  "a"  'org-agenda
-  "c"  'org-archive-subtree
-  "l"  'evil-org-open-links
-  "o"  'evil-org-recompute-clocks
-)
+(when evil-org-evil-leader-enabled
+  ;; leader maps
+  (evil-leader/set-key-for-mode 'org-mode
+    "t"  'org-show-todo-tree
+    "a"  'org-agenda
+    "c"  'org-archive-subtree
+    "l"  'evil-org-open-links
+    "o"  'evil-org-recompute-clocks
+  ))
 
 ;; normal & insert state shortcuts.
 (mapc (lambda (state)
